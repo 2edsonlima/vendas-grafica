@@ -1,0 +1,18 @@
+# Usa uma imagem leve do Node.js
+FROM node:18-alpine
+
+# Define o diretório de trabalho no container
+WORKDIR /app
+
+# Copia os arquivos de dependência e instala
+COPY package*.json ./
+RUN npm install
+
+# Copia todo o restante do código do frontend
+COPY . .
+
+# Expõe a porta do Vite
+EXPOSE 5173
+
+# O parâmetro '--host' é essencial para o Vite aceitar conexões vindas de fora do container
+CMD ["npm", "run", "dev", "--", "--host"]
